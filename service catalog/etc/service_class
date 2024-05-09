@@ -5,27 +5,30 @@ class Service():
         self.service_name=service_name
         self.ip_address=ip_address
         self.ip_port=ip_port
-        self.url=self.create_url()
+        self.url=self.build_url()
     
-    def create_url(self):
+    def build_url(self):
         url="http://"+self.ip_address+":"+str(self.ip_port)+"/"+self.service_name
         return url
     
-    def jsonify(self):
-        service={'IP_address':self.ip_address,'port':self.ip_port,'service':'/'+self.service_name,'url':self.url}
+    def json_dump(self):
+        service={
+            'IP_address':self.ip_address,
+            'port':self.ip_port,'service':'/'+self.service_name,
+            'url':self.url
+            }
         return service
 
-class ServiceCatalog(object):
-    def __init__(self,db_filename):
-        #configure the service catalog according to information stored inside database
-        self.db_filename=db_filename
-        self.content=json.load(open(self.db_filename,"r"))
+class Service_Catalog(object):
+    def __init__(self,set_filename):
+        #configure the service catalog according to information stored inside the settings file
+        self.set_filename=set_filename
+        self.content=json.load(open(self.set_filename,"r"))
+        self.service=self.content['service_catalog'].get('service')
         self.serviceCatalogIP=self.content['service_catalog'].get('IP_address')
         self.serviceCatalogPort=self.content['service_catalog'].get('port')
-        self.service=self.content['service_catalog'].get('service')
-
-                
-    def retrieveInfo(self,catalog,service):
+                     
+    def acquireInfo(self,catalog,service):
         serviceAddress='http://'+catalog[service].get("IP_address")+':'+str(catalog[service].get("port"))
         return serviceAddress
     
@@ -36,19 +39,19 @@ class ServiceCatalog(object):
         else:
             return False
         
-    def registry(self,name,IP,port):
+    def record(self,name,IP,port):
         try:
             new_service=Service(name,IP,port)
             if self.findService(name):
-                self.removeService(new_service.service_name)
+                self.deleteService(new_service.service_name)
             
-            self.content[name]=new_service.jsonify()
-            return new_service.jsonify()['service']
+            self.content[name]=new_service.json_dump()
+            return new_service.json_dump()['service']
         except Exception as e:
             
             return False
     
-    def removeService(self,service):
+    def deleteService(self,service):
         if self.findService(service):
             del self.content[service]
             return True

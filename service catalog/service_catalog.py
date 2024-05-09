@@ -10,7 +10,7 @@ from etc.service_class import ServiceCatalog
 class ServiceCatalogREST():
     exposed=True
     def __init__(self,filename):
-        self.catalog=ServiceCatalog(filename)
+        self.catalog=Service_Catalog(filename)
                 
     def GET(self,*uri):
         if len(uri)!=0:
