@@ -11,7 +11,7 @@ class Service():
         url="http://"+self.ip_address+":"+str(self.ip_port)+"/"+self.service_name
         return url
     
-    def json_dump(self):
+    def json_output(self):
         service={
             'IP_address':self.ip_address,
             'port':self.ip_port,'service':'/'+self.service_name,
@@ -46,7 +46,7 @@ class Service_Catalog(object):
                 self.deleteService(new_service.service_name)
             
             self.content[name]=new_service.json_dump()
-            return new_service.json_dump()['service']
+            return new_service.json_output()['service']
         except Exception as e:
             
             return False

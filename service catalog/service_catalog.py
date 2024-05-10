@@ -19,12 +19,16 @@ class ServiceCatalogREST():
                     try:
                         url=requests.get(self.catalog.content['ngrok']+"/api/tunnels/"+uri[0]).json()['public_url']
                         url=url+self.catalog.content[str(uri[0])]['service']
-                        output={"url":url}
+                        output={
+                            "url":url
+                            }
                     except:
                         try:
-                            output={"url":self.catalog.content[str(uri[0])]['url']}
+                            output={
+                                "url":self.catalog.content[str(uri[0])]['url']
+                                }
                         except:
-                            raise cherrypy.HTTPError(404,"Service: Not found")
+                            raise cherrypy.HTTPError(404,"The requested service was not found")
                 else:
                     raise cherrypy.HTTPError(400, "Bad request")
 
@@ -32,14 +36,14 @@ class ServiceCatalogREST():
                 try:
                     output=self.catalog.content[str(uri[0])]
                 except:
-                    raise cherrypy.HTTPError(404,"Service: Not found")
+                    raise cherrypy.HTTPError(404,"The requested service was not found")
         else:
-            output=self.catalog.content['description'] 
+            output=self.catalog.content['overview'] 
 
         return json.dumps(output,indent=4) 
 
     def PUT(self,*uri):
-        successFlag=0
+        Flag=0
         if len(uri)!=0:
             if uri[0]=="register":
                 try:
@@ -47,11 +51,11 @@ class ServiceCatalogREST():
                         body=cherrypy.request.body.read()
                         json_body=json.loads(body.decode('utf-8'))
                     except:
-                        raise cherrypy.HTTPError(400, "Can't read your body message!")
-                    new_service=self.catalog.registry(json_body['service'],json_body['IP_address'],json_body['port'])
+                        raise cherrypy.HTTPError(400, "It's not possible to read your body message!")
+                    new_service=self.catalog.record(json_body['service'],json_body['IP_address'],json_body['port'])
                     if new_service is not False:
                         output="Service '{}' updated".format(json_body['service'])
-                        successFlag=1
+                        Flag=1
                     else:
                         output="Service '{}'- Registration failed".format(json_body['service'])
                 except IndexError as e:
@@ -61,15 +65,15 @@ class ServiceCatalogREST():
             else:
                 raise cherrypy.HTTPError(501, "No operation!")
         print(output)
-        if successFlag==1:
+        if Flag==1:
             self.catalog.save()
             return json.dumps(new_service,indent=4)
         
     def DELETE(self,*uri):
         if len(uri)!=0:
             try:
-                if self.catalog.removeService(uri[0]):
-                    print("Service '{}' deleted".format(uri[0]))
+                if self.catalog.deleteService(uri[0]):
+                    print("Service '{}' removed".format(uri[0]))
                     self.catalog.save()
                 else:
                     raise cherrypy.HTTPError(404, "Service not found: "+uri[0])
