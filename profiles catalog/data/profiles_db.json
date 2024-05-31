@@ -1,0 +1,91 @@
+{
+    "last_creation": "05/01/2022 19:54",
+    "profiles": [
+        {
+            "platform_ID": "Leaf_002",
+            "platform_name": "My Home",
+            "warning": true,
+            "Patient_cnt": 7,
+            "location": null,
+            "coord": {
+                "lat": 45.470501,
+                "long": 9.19746075
+            },
+            "Patients": [
+                {
+                    "Patient_ID": "Patient_6",
+                    "connection_flag": false,
+                    "preferences": {
+                        "optimal": {
+                            "temperature": {
+                                "min": 20,
+                                "max": 22
+                            },
+                            "humidity": {
+                                "min": 40,
+                                "max": 60
+                            },
+                            "AQI": {
+                                "min": 0,
+                                "max": 650
+                            }
+                        },
+                        "thresholds": {
+                            "temperature": {
+                                "min": 20.0,
+                                "max": 22.0
+                            },
+                            "humidity": {
+                                "min": 40,
+                                "max": 70
+                            },
+                            "AQI": {
+                                "min": 0,
+                                "max": 650
+                            }
+                        },
+                        "Patient_name": "Hadi"
+                    },
+                    "connection_timestamp": 1642179545.4941387
+                },
+                {
+                    "Patient_ID": "Patient_7",
+                    "connection_flag": true,
+                    "preferences": {
+                        "optimal": {
+                            "temperature": {
+                                "min": 20,
+                                "max": 22
+                            },
+                            "humidity": {
+                                "min": 40,
+                                "max": 60
+                            },
+                            "AQI": {
+                                "min": 0,
+                                "max": 650
+                            }
+                        },
+                        "thresholds": {
+                            "temperature": {
+                                "min": 20.0,
+                                "max": 22.0
+                            },
+                            "humidity": {
+                                "min": 40,
+                                "max": 70
+                            },
+                            "AQI": {
+                                "min": 0,
+                                "max": 650
+                            }
+                        },
+                        "Patient_name": "Aldo"
+                    },
+                    "connection_timestamp": 1642246797.1157234
+                }
+            ],
+            "creation_date": "15/12/2021 21:29"
+        }
+    ]
+}
