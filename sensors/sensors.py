@@ -5,6 +5,10 @@ import paho.mqtt.client as mqtt
 import requests
 from threading import Thread
 
+"""
+In this script all the sensors simulated all in one script.
+"""
+
 # MQTT settings
 Broker = "test.mosquitto.org"          # Defining the MQTT Broker.
 MQTT_BROKER = Broker
